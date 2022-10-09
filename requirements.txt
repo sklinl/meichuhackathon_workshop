@@ -1,0 +1,5 @@
+uvicorn
+gunicorn
+fastapi
+python-multipart
+opencv-python-headless==4.6.0.66
