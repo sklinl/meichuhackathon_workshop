@@ -42,9 +42,9 @@ def send_email(recipients: str = 'kevinlinsk19@gmail.com'):
 
 
 @app.post('/api/v2/alert')
-def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.com'):
+async def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.com'):
 
-
+    print("post image start")
     content = MIMEMultipart()  #建立MIMEMultipart物件
     content["subject"] = "[ALARM] Please check it for more detail"  #郵件標題
     content["from"] = "kevinlinsk19@gmail.com"  #寄件者
@@ -65,7 +65,7 @@ def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.co
         except Exception as e:
             print("Error message: ", e)
 
-    time.sleep(3)
+    # time.sleep(3)
 
     return 'OK'
 
