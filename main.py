@@ -10,6 +10,7 @@ from fastapi import File, UploadFile
 import numpy as np
 # import model.detection as det
 import cv2 as cv
+import time
 
 
 app = FastAPI(title='AI Alert sender')
@@ -50,6 +51,7 @@ def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.co
     content["to"] = (', ').join(recipients.split(',')) #收件者
     content.attach(MIMEText("你違規了來自上傳的檔案"))  #郵件內容
     content.attach(MIMEImage(file))  # 郵件圖片內容
+    print("attach file success.")
     with smtplib.SMTP(host="smtp.gmail.com", port="587") as smtp:  # 設定SMTP伺服器
 
         try:
@@ -62,6 +64,8 @@ def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.co
 
         except Exception as e:
             print("Error message: ", e)
+
+    time.sleep(3)
 
     return 'OK'
 
