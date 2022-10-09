@@ -12,7 +12,6 @@ import numpy as np
 import cv2 as cv
 import time
 
-
 app = FastAPI(title='AI Alert sender')
 gmail_token = base64.b64decode("d3doem92YXlzY2VzenJ5aw==").decode('utf-8')
 
@@ -42,8 +41,9 @@ def send_email(recipients: str = 'kevinlinsk19@gmail.com'):
 
 
 @app.post('/api/v2/alert')
-async def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.com'):
+def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gmail.com'):
 
+    time.sleep(5)
     print("post image start")
     content = MIMEMultipart()  #建立MIMEMultipart物件
     content["subject"] = "[ALARM] Please check it for more detail"  #郵件標題
@@ -59,13 +59,10 @@ async def post_image(file: bytes = File(...), recipients: str = 'kevinlinsk19@gm
             smtp.starttls()  # 建立加密傳輸
             smtp.login("kevinlinsk19@gmail.com", gmail_token)  # 登入寄件者gmail
             smtp.send_message(content)  # 寄送郵件
-
             print("Complete!")
 
         except Exception as e:
             print("Error message: ", e)
-
-    # time.sleep(3)
 
     return 'OK'
 
